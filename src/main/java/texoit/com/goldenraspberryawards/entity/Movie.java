@@ -1,6 +1,5 @@
 package texoit.com.goldenraspberryawards.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -42,6 +41,5 @@ public class Movie {
 
     @ManyToOne
     @JoinColumn(referencedColumnName = "ID", name = "producer_id", insertable = false, updatable = false)
-    @JsonIgnore
     private Producer producer;
 }
