@@ -68,7 +68,7 @@ public class MigrateMoviesAndProducers implements ApplicationListener<Applicatio
                         .year(Integer.parseInt(csvRecord.get(CSVUtils.HEADERS[0])))
                         .title(csvRecord.get(CSVUtils.HEADERS[1]))
                         .studio(csvRecord.get(CSVUtils.HEADERS[2]))
-                        .winner(Boolean.parseBoolean(csvRecord.get(CSVUtils.HEADERS[4])))
+                        .winner("yes".equals(csvRecord.get(CSVUtils.HEADERS[4])))
                         .producerId(producer.getId())
                         .build());
         logger.info("Movie registered -> {}", movie);
