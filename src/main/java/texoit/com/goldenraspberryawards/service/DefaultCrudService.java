@@ -5,6 +5,7 @@ import org.springframework.data.domain.Pageable;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Optional;
 
 public interface DefaultCrudService<T, Id extends Serializable> {
 
@@ -14,7 +15,7 @@ public interface DefaultCrudService<T, Id extends Serializable> {
 
     List<T> save(List<T> entities);
 
-    T findOne(Id id);
+    Optional<T> findOne(Id id);
 
     Page<T> findAll(Pageable pageable);
 

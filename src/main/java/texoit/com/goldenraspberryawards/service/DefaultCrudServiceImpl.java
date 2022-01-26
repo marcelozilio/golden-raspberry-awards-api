@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public abstract class DefaultCrudServiceImpl<T, Id extends Serializable> implements DefaultCrudService<T, Id> {
@@ -33,8 +34,8 @@ public abstract class DefaultCrudServiceImpl<T, Id extends Serializable> impleme
     }
 
     @Override
-    public T findOne(Id id) {
-        return repository.findById(id).orElse(null);
+    public Optional<T> findOne(Id id) {
+        return repository.findById(id);
     }
 
     @Override
