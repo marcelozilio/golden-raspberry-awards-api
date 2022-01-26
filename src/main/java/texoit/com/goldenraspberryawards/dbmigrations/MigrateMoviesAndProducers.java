@@ -30,7 +30,7 @@ public class MigrateMoviesAndProducers implements ApplicationListener<Applicatio
     @Override
     public void onApplicationEvent(ApplicationReadyEvent event) {
         try {
-            this.handle("movies.csv");
+            this.handle("movieslist.csv");
         } catch (IOException e) {
             logger.error("Error on migrate database", e);
             e.printStackTrace();
