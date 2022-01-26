@@ -57,7 +57,7 @@ public class AwardIntervalUtil {
     public static List<AwardIntervalProcess> getIntervalsOfAwards(List<Integer> years) {
         return IntStream.range(0, years.size())
                 .mapToObj(i -> AwardIntervalProcessMapper.map(years, i))
-                .limit(years.size() - 1)
+                .limit(years.size() <= 1 ? 1 : years.size() - 1)
                 .collect(Collectors.toList());
     }
 }
