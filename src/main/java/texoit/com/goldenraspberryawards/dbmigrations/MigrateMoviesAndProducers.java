@@ -8,15 +8,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
-import texoit.com.goldenraspberryawards.entity.Movie;
-import texoit.com.goldenraspberryawards.entity.Producer;
 import texoit.com.goldenraspberryawards.service.MovieService;
 import texoit.com.goldenraspberryawards.service.ProducerService;
+import texoit.com.goldenraspberryawards.entity.Movie;
+import texoit.com.goldenraspberryawards.entity.Producer;
 import texoit.com.goldenraspberryawards.util.CSVUtils;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.Objects;
 
@@ -32,20 +30,20 @@ public class MigrateMoviesAndProducers implements ApplicationListener<Applicatio
     @Override
     public void onApplicationEvent(ApplicationReadyEvent event) {
         try {
-            this.handle();
+            this.handle("movies.csv");
         } catch (IOException e) {
             logger.error("Error on migrate database", e);
             e.printStackTrace();
         }
     }
 
-    public void handle() throws IOException {
+    public void handle(String fileName) throws IOException {
 
         logger.info("Init database migration...");
 
-        Reader reader = this.loadFile();
+        Reader reader = CSVUtils.loadFile(fileName);
 
-        CSVFormat csvFormat = this.buildCSVFortmat();
+        CSVFormat csvFormat = CSVUtils.buildCSVFortmat();
 
         csvFormat.parse(reader).forEach(csvRecord -> {
 
@@ -88,25 +86,7 @@ public class MigrateMoviesAndProducers implements ApplicationListener<Applicatio
         return producer;
     }
 
-    private CSVFormat buildCSVFortmat() {
-        return CSVFormat.RFC4180
-                .withDelimiter(';')
-                .withHeader(CSVUtils.HEADERS)
-                .withSkipHeaderRecord(true)
-                .withIgnoreEmptyLines(true);
-    }
 
-    private Reader loadFile() {
-
-        logger.info("Loading file do migrate database...");
-
-        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-        InputStream inputStream = classLoader.getResourceAsStream("movies.csv");
-
-        if (Objects.isNull(inputStream)) throw new RuntimeException("File to migrate database Not Found!");
-
-        return new InputStreamReader(inputStream);
-    }
 
 
 }

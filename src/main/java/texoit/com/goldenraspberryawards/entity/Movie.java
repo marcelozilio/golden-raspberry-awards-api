@@ -23,19 +23,19 @@ public class Movie {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "producer_id")
+    @Column(name = "producer_id", nullable = false)
     private Long producerId;
 
-    @Column
+    @Column(nullable = false)
     private Integer year;
 
-    @Column
+    @Column(nullable = false)
     private String title;
 
-    @Column
+    @Column(nullable = false)
     private String studio;
 
-    @Column
+    @Column(nullable = false)
     private Boolean winner;
 
     @ManyToOne

@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 import texoit.com.goldenraspberryawards.dto.AwardIntervalProcess;
 import texoit.com.goldenraspberryawards.dto.response.AwardInterval;
 import texoit.com.goldenraspberryawards.dto.response.AwardIntervalResponse;
-import texoit.com.goldenraspberryawards.entity.Movie;
 import texoit.com.goldenraspberryawards.entity.Producer;
 import texoit.com.goldenraspberryawards.mapper.AwardIntervalMapper;
 import texoit.com.goldenraspberryawards.util.AwardIntervalUtil;
@@ -15,7 +14,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Service
@@ -55,7 +53,7 @@ public class AwardIntervalService {
 
         producers.forEach(producer -> {
 
-            List<Integer> years = this.getYearsFromTheMovies(producer);
+            List<Integer> years = MovieUtils.getYearsFromTheMovies(producer.getMovies());
 
             List<AwardIntervalProcess> intervalsOfAwards = AwardIntervalUtil.getIntervalsOfAwards(years);
 
@@ -63,13 +61,6 @@ public class AwardIntervalService {
         });
 
         return producerAndIntervalsOfAwards;
-    }
-
-    private List<Integer> getYearsFromTheMovies(Producer producer) {
-        return producer.getMovies()
-                .stream()
-                .map(Movie::getYear)
-                .collect(Collectors.toList());
     }
 
     private void setAwardedMoviesAndSortByYear(List<Producer> producers) {
