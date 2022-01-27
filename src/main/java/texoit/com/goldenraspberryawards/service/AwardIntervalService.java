@@ -51,14 +51,16 @@ public class AwardIntervalService {
 
         Map<Producer, List<AwardIntervalProcess>> producerAndIntervalsOfAwards = new HashMap<>();
 
-        producers.forEach(producer -> {
+        producers.stream()
+                .filter(producer -> producer.getMovies().size() >= 2)
+                .forEach(producer -> {
 
-            List<Integer> years = MovieUtils.getYearsFromTheMovies(producer.getMovies());
+                    List<Integer> years = MovieUtils.getYearsFromTheMovies(producer.getMovies());
 
-            List<AwardIntervalProcess> intervalsOfAwards = AwardIntervalUtil.getIntervalsOfAwards(years);
+                    List<AwardIntervalProcess> intervalsOfAwards = AwardIntervalUtil.getIntervalsOfAwards(years);
 
-            producerAndIntervalsOfAwards.put(producer, intervalsOfAwards);
-        });
+                    producerAndIntervalsOfAwards.put(producer, intervalsOfAwards);
+                });
 
         return producerAndIntervalsOfAwards;
     }

@@ -8,10 +8,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
-import texoit.com.goldenraspberryawards.service.MovieService;
-import texoit.com.goldenraspberryawards.service.ProducerService;
 import texoit.com.goldenraspberryawards.entity.Movie;
 import texoit.com.goldenraspberryawards.entity.Producer;
+import texoit.com.goldenraspberryawards.service.MovieService;
+import texoit.com.goldenraspberryawards.service.ProducerService;
 import texoit.com.goldenraspberryawards.util.CSVUtils;
 
 import java.io.IOException;
@@ -30,7 +30,7 @@ public class MigrateMoviesAndProducers implements ApplicationListener<Applicatio
     @Override
     public void onApplicationEvent(ApplicationReadyEvent event) {
         try {
-            this.handle("movieslist.csv");
+            this.handle("movielist.csv");
         } catch (IOException e) {
             logger.error("Error on migrate database", e);
             e.printStackTrace();
